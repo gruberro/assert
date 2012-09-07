@@ -48,6 +48,8 @@ class Assertion
     const INVALID_MAX             = 36;
     const INVALID_LENGTH          = 37;
     const INVALID_FALSE           = 38;
+    const INVALID_NEQ             = 39;
+    const INVALID_NOT_SAME        = 40;
     const INVALID_DIRECTORY       = 101;
     const INVALID_FILE            = 102;
     const INVALID_READABLE        = 103;
@@ -91,6 +93,23 @@ class Assertion
     }
 
     /**
+     * Assert that two values are not equal (using != ).
+     *
+     * @param mixed $value
+     * @param mixed $value2
+     * @param string $message
+     * @param string $propertyPath
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    static public function neq($value, $value2, $message = null, $propertyPath = null)
+    {
+        if ($value == $value2) {
+            throw static::createException($message, static::INVALID_NEQ, $propertyPath);
+        }
+    }
+
+    /**
      * Assert that two values are the same (using ===).
      *
      * @param mixed $value
@@ -104,6 +123,23 @@ class Assertion
     {
         if ($value !== $value2) {
             throw static::createException($message, static::INVALID_SAME, $propertyPath);
+        }
+    }
+
+    /**
+     * Assert that two values are not the same (using !==).
+     *
+     * @param mixed $value
+     * @param mixed $value2
+     * @param string $message
+     * @param string $propertyPath
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    static public function notSame($value, $value2, $message = null, $propertyPath = null)
+    {
+        if ($value === $value2) {
+            throw static::createException($message, static::INVALID_NOT_SAME, $propertyPath);
         }
     }
 
